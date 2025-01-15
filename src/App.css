@@ -1,0 +1,43 @@
+.appContainer{
+  width: 90%;
+  margin: auto;
+}
+.header{
+  width: 35%;
+  box-sizing: border-box;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--text-400);
+}
+a{
+  color: transparent;
+  text-align: none;
+}
+.headerLinkItem{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.headerLinkItem p{
+  color: var(--text-400);
+  text-align: center;
+  transition: all .3s;
+  font-size: .95rem;
+  font-weight: 400;
+}
+.headerLinkItem p.active{
+  color: var(--text-700);
+}
+.indecator{
+  width: 100%;
+  height: 2px;
+  background-color: var(--text-400);
+  border-radius: 10px;
+  position: absolute;
+  bottom: 0;
+  transition: all .3s;
+}
+.indecator.active{
+  background-color: var(--text-700);
+}

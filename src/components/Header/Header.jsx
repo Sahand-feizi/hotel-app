@@ -10,7 +10,7 @@ const headerData = [
     {
         id: 2,
         url: '/',
-        name: 'Dashboard'
+        name: 'Hotels'
     },
     {
         id: 3,

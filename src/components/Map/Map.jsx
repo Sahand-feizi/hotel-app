@@ -1,0 +1,49 @@
+import React, { useEffect, useState } from 'react'
+import { useHotels } from '../context/HotelsContext/HotelsContext'
+import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
+
+function Map() {
+    const { hotels, isLoading, selectedHotelData } = useHotels()
+    const [selectedHotelLocation, setSelectedHotelLocation] = useState([selectedHotelData.latitude || 50, selectedHotelData?.longitude || 35])
+
+    useEffect(() => {
+
+        if (selectedHotelData?.latitude && selectedHotelData?.longitude) {
+            setSelectedHotelLocation([selectedHotelData.latitude, selectedHotelData.longitude])
+        }
+    }, [selectedHotelData])
+
+    if (isLoading) return <div>Loading ...</div>
+
+    return (
+        <MapContainer
+            center={selectedHotelLocation}
+            zoom={13}
+            scrollWheelZoom={true}
+            className='map'
+        >
+            <ChangeCenter position={selectedHotelLocation} />
+            <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            {
+                hotels.map(item => (
+                    <Marker position={[item.latitude, item.longitude]}>
+                        <Popup>
+                            {item.name}
+                        </Popup>
+                    </Marker>
+                ))
+            }
+        </MapContainer>
+    )
+}
+
+export default Map
+
+function ChangeCenter({ position }) {
+    const map = useMap()
+    map.setView(position)
+    return null
+}

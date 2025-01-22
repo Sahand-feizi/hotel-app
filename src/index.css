@@ -3,7 +3,8 @@
     Helvetica Neue, sans-serif;
   -webkit-font-smoothing: antialiased;
   --bg-color: #1ec283;
+  --bg-color-warm: #f1f6f7;
   --text-700: #25253f;
-  --text-400: #b8bec0;
+  --text-400: #a5a5a5;
   --text-500: #fd8444;
 }

@@ -7,22 +7,26 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { IoSettingsSharp } from "react-icons/io5";
 import { CiLogout } from "react-icons/ci";
 import Profile from '../Profile/Profile';
+import { Link } from 'react-router-dom';
 
 const dashboardData = [
   {
     id: 1,
+    url: '/hotels',
     title: 'Hotels',
     iconChangeTo: <MdSpaceDashboard className='icon' />,
     icon: <MdOutlineSpaceDashboard className='icon' />
   },
   {
     id: 2,
+    url: '/wallet',
     title: 'My Wallet',
     iconChangeTo: <IoWallet className='icon' />,
     icon: <IoWalletOutline className='icon' />,
   },
   {
     id: 3,
+    url: '',
     title: 'Settings',
     iconChangeTo: <IoSettingsSharp className='icon' />,
     icon: <IoSettingsOutline className='icon' />
@@ -38,7 +42,8 @@ function Slider() {
       <ul className='navbarList'>
         {
           dashboardData.map(item => (
-            <li
+            <Link
+              to={item.url}
               key={item.id}
               className={item.id == active && 'active'}
               onClick={() => setActive(item.id)}
@@ -48,7 +53,7 @@ function Slider() {
                 <p>{item.title}</p>
               </div>
               <span></span>
-            </li>
+            </Link>
           ))
         }
       </ul>

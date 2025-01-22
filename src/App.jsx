@@ -6,6 +6,8 @@ import SingleHotel from './components/SingleHotel/SingleHotel'
 import { HotelsProvider } from './components/context/HotelsContext/HotelsContext'
 import Map from './components/Map/Map'
 import { WalletProvider } from './components/context/WalletContext/WalletContext'
+import HotelsLayoute from './components/HotelsLayoute/HotelsLayoute'
+import WalletLayout from './components/WalletLayoute/WalletLayout'
 
 function App() {
 
@@ -16,8 +18,14 @@ function App() {
           <Toaster />
           <Routes>
             <Route path='/' element={<DashboardLayout />}>
-              <Route index element={<Map />} />
-              <Route path=':id' element={<SingleHotel />} />
+              <Route path='hotels' element={<HotelsLayoute />}>
+                <Route index element={<Map />} />
+                <Route path=':id' element={<SingleHotel />} />
+              </Route>
+              <Route path='wallet' element={<WalletLayout />}>
+                <Route index element={<Map />} />
+                <Route path=':id' element={<SingleHotel />} />
+              </Route>
             </Route>
           </Routes>
         </div>

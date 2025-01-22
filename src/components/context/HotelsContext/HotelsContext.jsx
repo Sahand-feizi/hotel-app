@@ -14,6 +14,8 @@ export function HotelsProvider({ children }) {
         'http://localhost:5000/hotels',
         searchParams ? `q=${destination || ''}&accommodates_gte=${room || 1}` : ''
     )
+    console.log(hotels);
+    
     const [selectedHotelData, setSelectedHotelData] = useState([])
     const [isLoadingSelectedHotel, setIsLoadingSelectedHotel] = useState(false)
 

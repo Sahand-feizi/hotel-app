@@ -63,7 +63,7 @@ a {
   padding: 0;
 }
 
-.navbarList li {
+.navbarList a {
   width: 100%;
   height: 2.8rem;
   display: flex;
@@ -77,11 +77,11 @@ a {
   cursor: pointer;
 }
 
-.navbarList li:hover {
+.navbarList a:hover {
   background-color: var(--bg-color-warm);
 }
 
-.navbarList li.active {
+.navbarList a.active {
   background-color: var(--bg-color);
 }
 
@@ -90,17 +90,17 @@ a {
   align-items: center;
 }
 
-.navbarList li p {
+.navbarList a p {
   font-size: 1.03rem;
   color: var(--text-400);
   transition: all .3s;
 }
 
-.navbarList li.active p {
+.navbarList a.active p {
   color: #fff;
 }
 
-.navbarList li.active span {
+.navbarList a.active span {
   width: 1px;
   height: 50%;
   border-radius: 10px;
@@ -117,7 +117,7 @@ a {
   transition: all .3s;
 }
 
-.navbarList li.active .iconContainer {
+.navbarList a.active .iconContainer {
   color: #fff;
 }
 

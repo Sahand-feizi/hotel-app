@@ -6,8 +6,6 @@ import { Outlet } from 'react-router-dom'
 function DashboardLayout() {
   return (
     <div className='dashboardContainer'>
-      <Slider />
-      <Hotels />
       <Outlet />
     </div>
   )

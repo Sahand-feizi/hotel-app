@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 export default function useGetFetchHotelsData(url, qury){
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+console.log(url,qury);
 
     useEffect(() => {
         async function fetchData(){
@@ -14,7 +15,7 @@ export default function useGetFetchHotelsData(url, qury){
                 setData(data)
             } catch (error) {
                 setData([])
-                toast.error(error?.response.data)
+                toast.error(error?.response?.data)
             }finally{
                 setIsLoading(false)
             }

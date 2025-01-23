@@ -5,8 +5,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { Link, useSearchParams } from 'react-router-dom';
 import { useHotels } from '../context/HotelsContext/HotelsContext';
 
-function Hotels() {
-  const { selectedHotelData, hotels, isLoading } = useHotels()
+function Hotels({hotels, isLoading, selectedHotelData}) {
 
   if (isLoading && hotels == null) return <div>Loading ...</div>
   
@@ -17,7 +16,7 @@ function Hotels() {
         {
           hotels.map(item => (
             <Link
-              to={`${item.id}`}
+              to={`${item.id}?lat=${item.latitude}&lng=${item.longitude}`}
               key={item.id}
               className={`hotelItem ${selectedHotelData.id == item.id && 'selectedHotel'}`}
             >

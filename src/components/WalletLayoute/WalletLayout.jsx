@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Slider from '../Slider/Slider'
 import Hotels from '../Hotels/Hotels'
 import { Outlet } from 'react-router-dom'
+import Map from '../Map/Map'
+import { useWallet } from '../context/WalletContext/WalletContext'
 
 function WalletLayout() {
+    const {hotels, isLoading, fetchData, selectedHotelData} = useWallet()
+
+    useEffect(() => {
+        fetchData('http://localhost:5000/wallet', '')
+    },[])
+
     return (
         <>
             <Slider />
-            <Hotels />
+            <Hotels hotels={hotels} isLoading={isLoading} selectedHotelData={selectedHotelData}/>
             <Outlet />
         </>
     )

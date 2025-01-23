@@ -25,28 +25,29 @@ const headerDetailData = [
     },
 ]
 
-function SingleHotel() {
+function SingleHotel({ cbSelectedHotel }) {
     const { id } = useParams()
     const { data: hotel, isLoading } = useGetFetchHotelsData(
         `http://localhost:5000/hotels/${Number(id)}`,
         ''
     )
-    const { selectedHotel } = useHotels()
     const [active, setActive] = useState(1)
     const [activeImg, setActiveImg] = useState(1)
     const { hotels, isLoading: walletIsLoading, isAddToWalletLoading, addToWallet } = useWallet()
-    const [isAddToWallet, setIsAddToWallet] = useState(hotels.find(item => item.id == hotel.id) ? true : false)
+    const [isAddToWallet, setIsAddToWallet] = useState(false)
 
     useEffect(() => {
-        selectedHotel(id)
-        setIsAddToWallet(hotels.find(item => item.id == hotel.id)? true : false)
-    }, [id, hotels])
+        cbSelectedHotel(id)
+        setIsAddToWallet(hotels.find(item => item.id == hotel.id) ? true : false)
+        console.log(hotels.find(item => Number(item.id) === Number(hotel.id)),id);
+        
+    }, [id, hotels, hotel])
 
     const handelAddToWallet = () => {
         addToWallet(hotel)
         setIsAddToWallet(prev => !prev)
     }
-    
+
 
     if (hotel == undefined) return <div>Loading ...</div>
 

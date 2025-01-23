@@ -3,11 +3,12 @@ import './App.css'
 import DashboardLayout from './components/DashboardLayout/DashboardLayout'
 import { Route, Routes } from 'react-router-dom'
 import SingleHotel from './components/SingleHotel/SingleHotel'
-import { HotelsProvider } from './components/context/HotelsContext/HotelsContext'
+import { HotelsProvider, useHotels } from './components/context/HotelsContext/HotelsContext'
 import Map from './components/Map/Map'
 import { WalletProvider } from './components/context/WalletContext/WalletContext'
 import HotelsLayoute from './components/HotelsLayoute/HotelsLayoute'
 import WalletLayout from './components/WalletLayoute/WalletLayout'
+import AppRoutes from './components/AppRoutes/AppRoutes'
 
 function App() {
 
@@ -16,18 +17,7 @@ function App() {
       <WalletProvider>
         <div className='appContainer'>
           <Toaster />
-          <Routes>
-            <Route path='/' element={<DashboardLayout />}>
-              <Route path='hotels' element={<HotelsLayoute />}>
-                <Route index element={<Map />} />
-                <Route path=':id' element={<SingleHotel />} />
-              </Route>
-              <Route path='wallet' element={<WalletLayout />}>
-                <Route index element={<Map />} />
-                <Route path=':id' element={<SingleHotel />} />
-              </Route>
-            </Route>
-          </Routes>
+          <AppRoutes />
         </div>
       </WalletProvider>
     </HotelsProvider>

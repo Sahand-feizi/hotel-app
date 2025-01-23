@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import { useHotels } from '../context/HotelsContext/HotelsContext'
 import { MapContainer, Marker, Popup, TileLayer, useMap } from 'react-leaflet'
+import { useSearchParams } from 'react-router-dom'
 
 function Map() {
-    const { hotels, isLoading, selectedHotelData } = useHotels()
-    const [selectedHotelLocation, setSelectedHotelLocation] = useState([selectedHotelData.latitude || 50, selectedHotelData?.longitude || 35])
+    const { hotels, isLoading } = useHotels()
+    const [searchParams, setSearchParams] = useSearchParams();
+    const lat = searchParams.get('lat')
+    const lng = searchParams.get('lng')
+    const [selectedHotelLocation, setSelectedHotelLocation] = useState([lat || 50, lng || 35])
 
     useEffect(() => {
-
-        if (selectedHotelData?.latitude && selectedHotelData?.longitude) {
-            setSelectedHotelLocation([selectedHotelData.latitude, selectedHotelData.longitude])
+        if (lat && lng) {
+            setSelectedHotelLocation([lat, lng])
         }
-    }, [selectedHotelData])
+    }, [lat, lng])
 
     if (isLoading) return <div>Loading ...</div>
 

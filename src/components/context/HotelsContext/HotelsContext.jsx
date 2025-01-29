@@ -10,29 +10,47 @@ export function HotelsProvider({ children }) {
     const [searchParams, setSearchParams] = useSearchParams()
     const room = JSON.parse(searchParams.get('options'))?.room;
     const destination = searchParams.get('destination')
-    const { data: hotels, isLoading } = useGetFetchHotelsData(
+    const { data: hotels, isLoading, fetchData } = useGetFetchHotelsData(
         'http://localhost:5000/hotels',
         searchParams ? `q=${destination || ''}&accommodates_gte=${room || 1}` : ''
     )
-    
+
     const [selectedHotelData, setSelectedHotelData] = useState([])
     const [isLoadingSelectedHotel, setIsLoadingSelectedHotel] = useState(false)
 
-    async function selectedHotel(id){
+    async function selectedHotel(id) {
         try {
             setIsLoadingSelectedHotel(true)
-            const {data} = await axios.get(`http://localhost:5000/hotels/${id}`)
+            const { data } = await axios.get(`http://localhost:5000/hotels/${id}`)
             setSelectedHotelData(data)
         } catch (error) {
             setSelectedHotelData([])
             toast.error(error?.message)
-        }finally{
+        } finally {
             setIsLoadingSelectedHotel(false)
         }
     }
 
+    async function removeHotel(id) {
+        try {
+            await axios.delete(`http://localhost:5000/hotels/${id}`)
+        } catch (error) {
+            toast.error(error?.message)
+        }finally{
+            fetchData('http://localhost:5000/hotels','')
+        }
+    }
+
     return (
-        <HotelsContext.Provider value={{ hotels, isLoading, selectedHotel, selectedHotelData, isLoadingSelectedHotel }}>
+        <HotelsContext.Provider value={{
+            hotels,
+            isLoading,
+            selectedHotel,
+            selectedHotelData,
+            isLoadingSelectedHotel,
+            removeHotel,
+            fetchData
+        }}>
             {children}
         </HotelsContext.Provider>
     )

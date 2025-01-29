@@ -6,6 +6,8 @@ import Map from "../Map/Map"
 import SingleHotel from "../SingleHotel/SingleHotel"
 import WalletLayout from "../WalletLayoute/WalletLayout"
 import { useWallet } from "../context/WalletContext/WalletContext"
+import AddNewHotelLayout from "../AddNewHotelLayout/AddNewHotelLayout"
+import AddNewHotel from "../addNewHotel/addNewHotel"
 
 function AppRoutes() {
     const { selectedHotel } = useHotels()
@@ -21,6 +23,10 @@ function AppRoutes() {
                 <Route path='wallet' element={<WalletLayout />}>
                     <Route index element={<Map />} />
                     <Route path=':id' element={<SingleHotel cbSelectedHotel={selectedHotelWallet}/>} />
+                </Route>
+                <Route path='addNewHotel' element={<AddNewHotelLayout />}>
+                    <Route index element={<Map className='addNewHotelMap'/>} />
+                    <Route path=":id" element={<AddNewHotel />} />
                 </Route>
             </Route>
         </Routes>

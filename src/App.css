@@ -337,7 +337,6 @@ a {
 
 .hotelItem {
   width: 100%;
-  height: 20rem;
   box-sizing: border-box;
   padding: 10px 15px;
   background-color: #fff;
@@ -495,7 +494,7 @@ a {
   height: 100%;
 }
 
-.addToWallet{
+.addToWallet {
   background-color: var(--bg-color);
   border: none;
   width: 100%;
@@ -508,4 +507,113 @@ a {
   font-size: 1.1rem;
   color: #fff;
   margin: 10px 0;
+}
+
+.addNewHotelMap {
+  grid-column: 2/-1;
+}
+
+.indexImageAddHotel {
+  height: 13rem;
+}
+
+.hotelImagesAddHotel img {
+  height: 7rem;
+  cursor: pointer;
+}
+
+.addNewHotel form {
+  width: 100%;
+}
+
+.addNewHotel form input {
+  width: 100%;
+  height: 3rem;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  background-color: var(--bg-color-warm);
+  outline: none;
+  border: none;
+  margin: 8px 0;
+}
+
+.addNewHotel form button {
+  width: 100%;
+  height: 3rem;
+  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 4px 6px;
+  background-color: var(--bg-color);
+  color: white;
+  border: none;
+  outline: none;
+}
+
+.addNewHotel form div{
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.addUrlImageContainer{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, .3);
+  z-index: 300;
+}
+
+.addUrlImage{
+  width: 40%;
+  padding: 8px 9px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.addUrlImage input{
+  width: 100%;
+  padding: 8px 9px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border: 1px solid black;
+  border-radius: 8px;
+  margin: 5px 0;
+}
+
+.addUrlImage button{
+  width: 100%;
+  padding: 8px 9px;
+  background-color: var(--bg-color);
+  border-radius: 8px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0;
+  border: none;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.removeHotel{
+  width: 100%;
+  height: 2.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #e33a3a;
+  border: none;
+  border-radius: 8px;
+  margin-top: 3px;
+  cursor: pointer;
 }

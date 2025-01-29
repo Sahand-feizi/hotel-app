@@ -38,6 +38,16 @@ export function WalletProvider({ children }) {
         }
     }
 
+    async function removeHotel(id) {
+        try {
+            await axios.delete(`http://localhost:5000/wallet/${id}`)
+        } catch (error) {
+            toast.error(error?.message)
+        }finally{
+            fetchData('http://localhost:5000/wallet','')
+        }
+    }
+
     return (
         <WalletContext.Provider value={{
             hotels,
@@ -46,7 +56,8 @@ export function WalletProvider({ children }) {
             addToWallet,
             fetchData,
             selectedHotel,
-            selectedHotelData
+            selectedHotelData,
+            removeHotel
         }}>
             {children}
         </WalletContext.Provider>

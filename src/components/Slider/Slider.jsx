@@ -26,8 +26,8 @@ const dashboardData = [
   },
   {
     id: 3,
-    url: '',
-    title: 'Settings',
+    url: '/addNewHotel',
+    title: 'Add New Hotel',
     iconChangeTo: <IoSettingsSharp className='icon' />,
     icon: <IoSettingsOutline className='icon' />
   },

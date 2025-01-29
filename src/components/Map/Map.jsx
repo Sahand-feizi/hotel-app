@@ -33,7 +33,7 @@ function Map({ className= '' }) {
             />
             {
                 hotels.map(item => (
-                    <Marker position={[item.latitude, item.longitude]}>
+                    <Marker key={item.id} position={[item.latitude, item.longitude]}>
                         <Popup>
                             {item.name}
                         </Popup>

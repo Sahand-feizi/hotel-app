@@ -11,8 +11,6 @@ export default function useGetFetchHotelsData(url, qury) {
             setIsLoading(true)
             const { data } = await axios.get(`${fetchUrl}?${fetchQury}`)
             setData(data)
-            console.log(data);
-            
         } catch (error) {
             setData([])
             toast.error(error?.response?.data)

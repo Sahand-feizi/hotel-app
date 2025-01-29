@@ -1,10 +1,36 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import useGetFetchHotelsData from "../../../hooks/useGetFetchHotelsData/useGetFetchHotelsData";
 import axios from "axios";
 import toast from "react-hot-toast";
 
 const HotelsContext = createContext()
+
+const initialState = {
+    selectedHotelData: [],
+    isLoadingSelectedHotel: false
+}
+
+function HotelReducer(state, { type, payload }) {
+    switch (type) {
+        case "loading":
+            return {
+                ...state,
+                isLoadingSelectedHotel: true
+            }
+        case "changeSelectedHotel":
+            return {
+                selectedHotelData: payload,
+                isLoadingSelectedHotel: false
+            }
+        case "rejected":
+            return {
+                selectedHotelData: [],
+                isLoadingSelectedHotel: false
+            }
+        default: throw new Error('somthing went rong')
+    }
+}
 
 export function HotelsProvider({ children }) {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -15,19 +41,16 @@ export function HotelsProvider({ children }) {
         searchParams ? `q=${destination || ''}&accommodates_gte=${room || 1}` : ''
     )
 
-    const [selectedHotelData, setSelectedHotelData] = useState([])
-    const [isLoadingSelectedHotel, setIsLoadingSelectedHotel] = useState(false)
+    const [{ isLoadingSelectedHotel, selectedHotelData }, dispatch] = useReducer(HotelReducer, initialState)
 
     async function selectedHotel(id) {
         try {
-            setIsLoadingSelectedHotel(true)
+            dispatch({ type: 'loading' })
             const { data } = await axios.get(`http://localhost:5000/hotels/${id}`)
-            setSelectedHotelData(data)
+            dispatch({ type: "changeSelectedHotel", payload: data })
         } catch (error) {
-            setSelectedHotelData([])
+            dispatch({ type: "rejected" })
             toast.error(error?.message)
-        } finally {
-            setIsLoadingSelectedHotel(false)
         }
     }
 
@@ -36,8 +59,8 @@ export function HotelsProvider({ children }) {
             await axios.delete(`http://localhost:5000/hotels/${id}`)
         } catch (error) {
             toast.error(error?.message)
-        }finally{
-            fetchData('http://localhost:5000/hotels','')
+        } finally {
+            fetchData('http://localhost:5000/hotels', '')
         }
     }
 

@@ -7,14 +7,38 @@ import toast from "react-hot-toast";
 const HotelsContext = createContext()
 
 const initialState = {
+    hotels:[],
+    isLoading: false,
+    error: '',
     selectedHotelData: [],
-    isLoadingSelectedHotel: false
+    isLoadingSelectedHotel: false,
 }
 
 function HotelReducer(state, { type, payload }) {
     switch (type) {
         case "loading":
             return {
+                ...state,
+                isLoading: true
+            }
+        case "access":
+            return{
+                ...state,
+                hotels: payload
+            }
+        case "rejected":
+            return{
+                ...state,
+                hotels: [],
+                error: payload
+            }
+        case "removeHotel":
+            return{
+                ...state,
+                hotels: state.hotels.filter(hotel => hotel.id != payload)
+            }
+        case "loadingSelectedHotel":
+            return{
                 ...state,
                 isLoadingSelectedHotel: true
             }
@@ -23,7 +47,7 @@ function HotelReducer(state, { type, payload }) {
                 selectedHotelData: payload,
                 isLoadingSelectedHotel: false
             }
-        case "rejected":
+        case "rejectedSelectedHotel":
             return {
                 selectedHotelData: [],
                 isLoadingSelectedHotel: false
@@ -33,20 +57,23 @@ function HotelReducer(state, { type, payload }) {
 }
 
 export function HotelsProvider({ children }) {
+
+    const [{ isLoadingSelectedHotel, selectedHotelData, hotels, error }, dispatch] = useReducer(HotelReducer, initialState)
+
     const [searchParams, setSearchParams] = useSearchParams()
     const room = JSON.parse(searchParams.get('options'))?.room;
     const destination = searchParams.get('destination')
-    const { data: hotels, isLoading, fetchData } = useGetFetchHotelsData(
-        'http://localhost:5000/hotels',
+    const { data , isLoading, fetchData } = useGetFetchHotelsData(
+        (data) => dispatch({type: 'access', payload: data}),
+        (err) => dispatch({type: 'rejected', payload: err}),
+        'http://localhost:4000/hotels',
         searchParams ? `q=${destination || ''}&accommodates_gte=${room || 1}` : ''
     )
-
-    const [{ isLoadingSelectedHotel, selectedHotelData }, dispatch] = useReducer(HotelReducer, initialState)
 
     async function selectedHotel(id) {
         try {
             dispatch({ type: 'loading' })
-            const { data } = await axios.get(`http://localhost:5000/hotels/${id}`)
+            const { data } = await axios.get(`http://localhost:4000/hotels/${id}`)
             dispatch({ type: "changeSelectedHotel", payload: data })
         } catch (error) {
             dispatch({ type: "rejected" })
@@ -56,11 +83,12 @@ export function HotelsProvider({ children }) {
 
     async function removeHotel(id) {
         try {
-            await axios.delete(`http://localhost:5000/hotels/${id}`)
+            dispatch({type: 'loading'})
+            await axios.delete(`http://localhost:4000/hotels/${id}`)
+            dispatch({type: 'removeHotel', payload: id})
         } catch (error) {
             toast.error(error?.message)
-        } finally {
-            fetchData('http://localhost:5000/hotels', '')
+            dispatch({type: 'rejected', payload: error?.message})
         }
     }
 

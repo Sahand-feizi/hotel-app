@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function useGetFetchHotelsData(url, qury) {
+export default function useGetFetchHotelsData(accessCb, rejecteCb, url, qury) {
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
@@ -10,10 +10,12 @@ export default function useGetFetchHotelsData(url, qury) {
         try {
             setIsLoading(true)
             const { data } = await axios.get(`${fetchUrl}?${fetchQury}`)
+            accessCb(data)
             setData(data)
         } catch (error) {
             setData([])
             toast.error(error?.response?.data)
+            rejecteCb(error?.response?.data)
         } finally {
             setIsLoading(false)
         }

@@ -7,13 +7,35 @@ import { useParams, useSearchParams } from "react-router-dom";
 const WalletContext = createContext()
 
 const initialState = {
+    hotels: [],
+    isLoading: false,
+    error: '',
     isAddToWalletLoading: false,
     selectedHotelData: []
 }
 
 function WalletReducer(state, {type, payload}){
     switch(type){
-        case "loading":
+        case "isLoading": 
+            return{
+                ...state,
+                isLoading: true
+            }
+        case "success":
+            return{
+                ...state,
+                isLoading: false,
+                hotels: payload,
+                error: ''
+            }
+        case "rejected":
+            return{
+                ...state,
+                isLoading: false,
+                error: payload,
+                hotels: false
+            }
+        case "changeSelectedHotelIsLoading":
             return{
                 ...state,
                 isAddToWalletLoading: true
@@ -23,7 +45,7 @@ function WalletReducer(state, {type, payload}){
                 isAddToWalletLoading: false,
                 selectedHotelData: payload
             }
-        case "rejected":
+        case "changeSelectedHotelRejected":
             return{
                 selectedHotelData: [],
                 isAddToWalletLoading: false
@@ -33,19 +55,27 @@ function WalletReducer(state, {type, payload}){
 }
 
 export function WalletProvider({ children }) {
+
+    const [{
+        isAddToWalletLoading,
+        selectedHotelData,
+        hotels,
+        error
+    }, dispatch] = useReducer(WalletReducer, initialState)
+    
     const { id } = useParams()
     const [searchParams, setSearchParams] = useSearchParams()
     const room = JSON.parse(searchParams.get('options'))?.room;
     const destination = searchParams.get('destination')
-    const { data: hotels, isLoading, fetchData } = useGetFetchHotelsData(
-        'http://localhost:5000/wallet',
+    const { data , isLoading, fetchData } = useGetFetchHotelsData(
+        (data) => dispatch({ type: 'success', payload: data }),
+        (err) => dispatch({ type: 'rejected', payload: err }),
+        'http://localhost:4000/wallet',
         `q=${destination || ''}&accommodates_gte=${room || 1}`)
-    
-    const [{isAddToWalletLoading, selectedHotelData}, dispatch] = useReducer(WalletReducer, initialState)
 
     const selectedHotel = async (selectedId) => {
         try {
-            const { data } = await axios.get(`http://localhost:5000/hotels/${selectedId}`)
+            const { data } = await axios.get(`http://localhost:4000/hotels/${selectedId}`)
             dispatch({type: "changeSelectedHotel", payload: data})
         } catch (error) {
             dispatch({type: "rejected"})
@@ -56,7 +86,7 @@ export function WalletProvider({ children }) {
     async function addToWallet(walletHotel) {
         try {
             dispatch({type: 'loading'})
-            await axios.post('http://localhost:5000/wallet', walletHotel)
+            await axios.post('http://localhost:4000/wallet', walletHotel)
         } catch (error) {
             toast.error(error?.message)
         } finally {
@@ -66,11 +96,11 @@ export function WalletProvider({ children }) {
 
     async function removeHotel(id) {
         try {
-            await axios.delete(`http://localhost:5000/wallet/${id}`)
+            await axios.delete(`http://localhost:4000/wallet/${id}`)
         } catch (error) {
             toast.error(error?.message)
         } finally {
-            fetchData('http://localhost:5000/wallet', '')
+            fetchData('http://localhost:4000/wallet', '')
         }
     }
 

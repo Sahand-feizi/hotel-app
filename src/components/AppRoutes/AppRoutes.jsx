@@ -8,6 +8,7 @@ import WalletLayout from "../WalletLayoute/WalletLayout"
 import { useWallet } from "../context/WalletContext/WalletContext"
 import AddNewHotelLayout from "../AddNewHotelLayout/AddNewHotelLayout"
 import AddNewHotel from "../addNewHotel/addNewHotel"
+import Login from "../Login/Login"
 
 function AppRoutes() {
     const { selectedHotel } = useHotels()
@@ -29,6 +30,7 @@ function AppRoutes() {
                     <Route path=":id" element={<AddNewHotel />} />
                 </Route>
             </Route>
+            <Route path="/login" element={<Login />}/>
         </Routes>
     )
 }

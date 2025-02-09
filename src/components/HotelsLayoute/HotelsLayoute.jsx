@@ -9,13 +9,8 @@ function HotelsLayoute() {
         selectedHotelData,
         hotels,
         isLoading,
-        fetchData,
         removeHotel
     } = useHotels()
-
-    useEffect(() => {
-        fetchData('http://localhost:5000/hotels', '')
-    },[])
 
     return (
         <>

@@ -15,7 +15,7 @@ function WalletLayout() {
     } = useWallet()
 
     useEffect(() => {
-        fetchData('http://localhost:5000/wallet', '')
+        fetchData('http://localhost:4000/wallet', '')
     }, [])
 
     return (

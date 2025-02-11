@@ -35,7 +35,7 @@ function SingleHotel({ cbSelectedHotel, hotel }) {
     }, [id])
 
     useEffect(() => {
-        setIsAddToWallet(hotels.find(item => item.id == hotel.id) ? true : false)
+        setIsAddToWallet(hotels.find(item => item.id == hotel?.id) ? true : false)
     }, [id, hotel, hotels])
 
     const handelAddToWallet = () => {

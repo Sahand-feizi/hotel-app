@@ -1,9 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import HeaderSearch from '../HeaderSearch/HeaderSearch'
 import { CiLocationOn } from "react-icons/ci";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Hotels({ hotels, isLoading, selectedHotelData, removeHotelCb }) {
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    console.log(selectedHotelData);
+    
+    if(selectedHotelData){
+      navigate(`${selectedHotelData.id}?lat=${selectedHotelData.latitude}&lng=${selectedHotelData.longitude}`)
+    }
+  },[])
 
   if (isLoading && hotels == null) return <div>Loading ...</div>
 

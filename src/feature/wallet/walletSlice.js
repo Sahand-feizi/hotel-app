@@ -10,7 +10,7 @@ const initialState = {
     loadingPost: false,
     errorPost: '',
     selectedHotelLoading: false,
-    selectedHotelData: [],
+    selectedHotelData: null,
     selectedHotelError: '',
 }
 
@@ -113,6 +113,7 @@ const walletSlice = createSlice({
                 return {
                     ...state,
                     selectedHotelLoading: true,
+                    selectedHotelData: null,
                     selectedHotelError: ''
                 }
             })
@@ -125,12 +126,10 @@ const walletSlice = createSlice({
                 }
             })
             .addCase(getFetchSelectedWallet.rejected, (state, action) => {
-                console.log(action.payload);
-                
                 return {
                     ...state,
                     selectedHotelLoading: false,
-                    selectedHotelData: [],
+                    selectedHotelData: null,
                     selectedHotelError: action.payload
                 }
             })

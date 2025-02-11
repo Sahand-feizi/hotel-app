@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { MdSpaceDashboard } from "react-icons/md";
 import { IoWalletOutline } from "react-icons/io5";
@@ -34,7 +34,15 @@ const dashboardData = [
 ]
 
 function Slider() {
-  const [active, setActive] = useState(1)
+  const [active, setActive] = useState(null)
+  
+  useEffect(() => {
+    const pageurl = window.location.href.split('/')[3]
+    pageurl == 'hotels' ? setActive(1) : 
+    pageurl == 'wallet' ? setActive(2) :
+    pageurl == 'addNewHotel' ? setActive(3) :
+    ''
+  },[window.location.href.split('/')[3]])
 
   return (
     <div className='slider'>
@@ -46,7 +54,6 @@ function Slider() {
               to={item.url}
               key={item.id}
               className={item.id == active && 'active'}
-              onClick={() => setActive(item.id)}
             >
               <div className='iconAndNameContainer'>
                 <div className="iconContainer">{item.id == active ? item.iconChangeTo : item.icon}</div>

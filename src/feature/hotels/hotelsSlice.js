@@ -51,7 +51,7 @@ const initialState = {
     loadingPost: false,
     errorPost: '',
     loadingSelectedHotel: false,
-    selectedHotelData: [],
+    selectedHotelData: null,
     selectedHotelError: ''
 }
 
@@ -116,7 +116,7 @@ const hotelsSlice = createSlice({
                 return {
                     ...state,
                     loadingSelectedHotel: true,
-                    selectedHotelData: [],
+                    selectedHotelData: null,
                     selectedHotelError: ''
                 }
             })
@@ -132,7 +132,7 @@ const hotelsSlice = createSlice({
                 return {
                     ...state,
                     loadingSelectedHotel: false,
-                    selectedHotelData: [],
+                    selectedHotelData: null,
                     selectedHotelError: action.payload
                 }
             })

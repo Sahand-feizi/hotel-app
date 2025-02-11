@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import useGetFetchHotelsData from '../../hooks/useGetFetchHotelsData/useGetFetchHotelsData'
 import Map from '../Map/Map'
-import { useHotels } from '../context/HotelsContext/HotelsContext'
-import { useWallet } from '../context/WalletContext/WalletContext'
-import axios from 'axios'
-import toast from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { addFetchWallet } from '../../feature/wallet/walletSlice'
 
 const headerDetailData = [
     {
@@ -25,26 +22,24 @@ const headerDetailData = [
     },
 ]
 
-function SingleHotel({ cbSelectedHotel }) {
+function SingleHotel({ cbSelectedHotel, hotel }) {
     const { id } = useParams()
-    const { data: hotel, isLoading } = useGetFetchHotelsData(
-        `http://localhost:5000/hotels/${Number(id)}`,
-        ''
-    )
     const [active, setActive] = useState(1)
     const [activeImg, setActiveImg] = useState(1)
-    const { hotels, isLoading: walletIsLoading, isAddToWalletLoading, addToWallet } = useWallet()
+    const { AddToWalletLoading, hotels } = useSelector(state => state.wallet)
     const [isAddToWallet, setIsAddToWallet] = useState(false)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         cbSelectedHotel(id)
+    }, [id])
+
+    useEffect(() => {
         setIsAddToWallet(hotels.find(item => item.id == hotel.id) ? true : false)
-        console.log(hotels.find(item => Number(item.id) === Number(hotel.id)),id);
-        
-    }, [id, hotels, hotel])
+    }, [id, hotel, hotels])
 
     const handelAddToWallet = () => {
-        addToWallet(hotel)
+        dispatch(addFetchWallet(hotel))
         setIsAddToWallet(prev => !prev)
     }
 
@@ -92,7 +87,7 @@ function SingleHotel({ cbSelectedHotel }) {
             {
                 isAddToWallet ?
                     <p>hotel was add to wallet :)</p> :
-                    <button className="addToWallet" onClick={handelAddToWallet}>{isAddToWalletLoading ? 'Loading ...' : 'Add To Wallet'}</button>
+                    <button className="addToWallet" onClick={handelAddToWallet}>{AddToWalletLoading ? 'Loading ...' : 'Add To Wallet'}</button>
             }
         </div>
     )

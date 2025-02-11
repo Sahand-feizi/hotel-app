@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useHotels } from '../context/HotelsContext/HotelsContext'
 import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent } from 'react-leaflet'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function Map({ className= '' }) {
-    const { hotels, isLoading } = useHotels()
+    const {hotels, loading: isLoading} = useSelector(state => state.hotels)
     const [searchParams, setSearchParams] = useSearchParams();
     const lat = searchParams.get('lat')
     const lng = searchParams.get('lng')

@@ -1,31 +1,31 @@
 import React, { useEffect } from 'react'
 import Slider from '../Slider/Slider'
 import Hotels from '../Hotels/Hotels'
-import { Outlet } from 'react-router-dom'
-import Map from '../Map/Map'
-import { useWallet } from '../context/WalletContext/WalletContext'
+import { Outlet, useSearchParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { getFetchWallet, removeFetchWallet } from '../../feature/wallet/walletSlice'
 
 function WalletLayout() {
-    const {
-        hotels,
-        isLoading,
-        fetchData,
-        selectedHotelData,
-        removeHotel
-    } = useWallet()
+    const [searchParams, setSearchParams] = useSearchParams()
+    const destination = searchParams.get('destination')
+    const room = JSON.parse(searchParams.get('options'))?.room
+    const state = useSelector(state => state.wallet)
+    const dispatch = useDispatch()
+    console.log(state);
+    
 
     useEffect(() => {
-        fetchData('http://localhost:4000/wallet', '')
-    }, [])
+        dispatch(getFetchWallet({destination, room}))
+    }, [destination, room])
 
     return (
         <>
             <Slider />
             <Hotels
-                hotels={hotels}
-                isLoading={isLoading}
-                selectedHotelData={selectedHotelData}
-                removeHotelCb={(id) => removeHotel(id)}
+                selectedHotelData={state.selectedHotelData}
+                hotels={state.hotels}
+                isLoading={state.loading}
+                removeHotelCb={(id) => dispatch(removeFetchWallet(id))}
             />
             <Outlet />
         </>

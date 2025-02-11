@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import HeaderSearch from '../HeaderSearch/HeaderSearch'
-import useGetFetchHotelsData from '../../hooks/useGetFetchHotelsData/useGetFetchHotelsData'
 import { CiLocationOn } from "react-icons/ci";
-import { Link, useSearchParams } from 'react-router-dom';
-import { useHotels } from '../context/HotelsContext/HotelsContext';
+import { Link } from 'react-router-dom';
 
 function Hotels({ hotels, isLoading, selectedHotelData, removeHotelCb }) {
 
@@ -24,7 +22,7 @@ function Hotels({ hotels, isLoading, selectedHotelData, removeHotelCb }) {
             <Link
               to={`${item.id}?lat=${item.latitude}&lng=${item.longitude}`}
               key={item.id}
-              className={`hotelItem ${selectedHotelData.id == item.id && 'selectedHotel'}`}
+              className={`hotelItem ${selectedHotelData?.id == item.id && 'selectedHotel'}`}
             >
               <img className='hotelItemImg' src={item.picture_url.urls[0].image} alt={item.name} />
               <p className="hotelName">{item.name}</p>

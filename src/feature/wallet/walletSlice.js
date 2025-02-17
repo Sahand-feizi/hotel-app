@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = ' http://localhost:4000/wallet'
+const BASE_URL = ' http://localhost:3000/wallet'
 
 const initialState = {
     hotels: [],

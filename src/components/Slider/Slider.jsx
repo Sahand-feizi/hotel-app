@@ -8,6 +8,7 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { CiLogout } from "react-icons/ci";
 import Profile from '../Profile/Profile';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 const dashboardData = [
   {
@@ -35,6 +36,7 @@ const dashboardData = [
 
 function Slider() {
   const [active, setActive] = useState(null)
+  const dispatch = useDispatch()
   
   useEffect(() => {
     const pageurl = window.location.href.split('/')[3]
@@ -46,14 +48,14 @@ function Slider() {
 
   return (
     <div className='slider'>
-      <Profile />
+      <Profile/>
       <ul className='navbarList'>
         {
           dashboardData.map(item => (
             <Link
               to={item.url}
               key={item.id}
-              className={item.id == active && 'active'}
+              className={item.id == active ? 'active' : ''}
             >
               <div className='iconAndNameContainer'>
                 <div className="iconContainer">{item.id == active ? item.iconChangeTo : item.icon}</div>

@@ -2,12 +2,14 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { redirect } from "react-router-dom";
 
-const BASE_URL = 'http://localhost:4000/hotels'
+const BASE_URL = 'http://localhost:3000/hotels'
 
 export const getFetchHotels = createAsyncThunk('hotels/getFetchHotels', async (payload, { rejectWithValue }) => {
     try {
+        
+        
         const { data } = await axios.get(
-            `${BASE_URL}?q=${payload.destination || ''}&accommodates_gte=${payload.room || 1}`
+            `${BASE_URL}?q=${payload?.destination || ''}&accommodates_gte=${payload?.room || 1}`
         )
         console.log(data);
         

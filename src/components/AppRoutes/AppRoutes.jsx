@@ -14,26 +14,27 @@ import { getFetchSelectedHotel } from "../../feature/hotels/hotelsSlice"
 function AppRoutes() {
 
     const dispatch = useDispatch()
-    const { selectedHotelData: selectedHotelDataHotels } = useSelector(state => state.hotels)
-    const { selectedHotelData: selectedHotelDataWallet } = useSelector(state => state.wallet)
+    const { loading, hotels, selectedHotelData: selectedHotelDataHotels } = useSelector(state => state.hotels)
+    const { loading: walletLoading, hotels: WalletHotels, selectedHotelData: selectedHotelDataWallet } = useSelector(state => state.wallet)
+    console.log(hotels);
     
     return (
         <Routes>
             <Route path='/' element={<DashboardLayout />}>
                 <Route path='hotels' element={<HotelsLayoute />}>
-                    <Route index element={<Map />} />
-                    <Route path=':id' element={<SingleHotel hotel={selectedHotelDataHotels} cbSelectedHotel={(id) => dispatch(getFetchSelectedHotel(id))} />} />
+                    <Route index element={<Map hotels={hotels} isLoading={loading}/>} />
+                    <Route path=':id' element={<SingleHotel showMapHotels={{hotels: hotels, loading: loading}} hotel={selectedHotelDataHotels} cbSelectedHotel={(id) => dispatch(getFetchSelectedHotel(id))} />} />
                 </Route>
                 <Route path='wallet' element={<WalletLayout />}>
-                    <Route index element={<Map />} />
-                    <Route path=':id' element={<SingleHotel hotel={selectedHotelDataWallet} cbSelectedHotel={(id) => dispatch(getFetchSelectedWallet(id))}/>} />
+                    <Route index element={<Map hotels={WalletHotels} isLoading={walletLoading}/>} />
+                    <Route path=':id' element={<SingleHotel showMapHotels={{hotels: WalletHotels, loading: walletLoading}} hotel={selectedHotelDataWallet} cbSelectedHotel={(id) => dispatch(getFetchSelectedWallet(id))}/>} />
                 </Route>
                 <Route path='addNewHotel' element={<AddNewHotelLayout />}>
-                    <Route index element={<Map className='addNewHotelMap'/>} />
+                    <Route index element={<Map isLoading={loading} style='addNewHotelMap' hotels={hotels}/>} />
                     <Route path=":id" element={<AddNewHotel />} />
                 </Route>
             </Route>
-            <Route path="/login" element={<Login />}/>
+            <Route index element={<Login />}/>
         </Routes>
     )
 }

@@ -158,7 +158,7 @@ a {
   background-color: var(--bg-color-warm);
   margin: 10px;
   box-sizing: border-box;
-  padding: 20px;
+  padding: 10px;
 }
 
 .hotelsHeader {
@@ -172,9 +172,10 @@ a {
   align-items: center;
   height: 2.4rem;
   flex-direction: row-reverse;
+  width: 100%;
 }
 
-.hotelFilterSearchList.open .headerSearch {
+.hotelFilterSearchListContainer.open .headerSearch {
   width: 100%;
 }
 
@@ -193,6 +194,7 @@ a {
   font-size: .9rem;
   border: none;
   outline: none;
+  width: 100%;
 }
 
 .searchIconContainer {
@@ -203,18 +205,23 @@ a {
   margin-right: 5px;
 }
 
-.hotelFilterSearchList {
-  display: flex;
+.hotelFilterSearchListContainer {
   box-sizing: border-box;
   background-color: #fff;
   border-radius: 15px;
   border: 1px solid var(--bg-color);
   width: 100%;
   height: 3rem;
-  align-items: center;
-  justify-content: center;
   border: 1px solid var(--bg-color);
   transition: all .5s;
+  display: flex;
+  align-items: center;
+}
+
+.hotelFilterSearchList{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
 }
 
 .hotelFilterSearchItem {
@@ -242,21 +249,26 @@ a {
   cursor: pointer;
 }
 
-.hotelFilterSearchItem p {
+.hotelFilterSearchItemContainer{
+  display: flex;
+  align-items: center;
+}
+
+.hotelFilterSearchItemContainer p {
   font-size: .9rem;
   margin: 2px 3px;
   color: var(--text-400);
   font-weight: 500;
 }
 
-.hotelFilterSearchItem span {
+.hotelFilterSearchItemContainer span {
   font-size: .7rem;
   margin: 2px 3px;
   color: var(--text-400);
   font-weight: 200;
 }
 
-.hotelFilterSearchItem .icon {
+.hotelFilterSearchItemContainer .icon {
   font-size: .9rem;
   margin: 2px 3px;
   color: var(--text-400);
@@ -497,7 +509,7 @@ a {
 .map {
   width: 100%;
   height: 100%;
-  z-index: -3;
+  z-index: 1;
 }
 
 .addToWallet {

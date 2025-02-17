@@ -1,0 +1,111 @@
+@media (max-width :1050px) {
+    .hotels{
+        display: flex;
+        flex-direction: row-reverse;
+    }
+    .hotelsHeader{
+        width: 30%;
+    }
+    .headerSearch{
+        flex-direction: column-reverse;
+        height: 100%;
+        width: 100%;
+    }
+    .hotelFilterSearchListContainer{
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 10px;
+        
+    }
+    .hotelFilterSearchList{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    }
+    .hotelFilterSearchItem{
+        width: 100%;
+        flex-direction: column;
+        align-items: start;
+        margin: 10px 0;
+    }
+    .hotelFilterSearchItemContainer{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+    .destination{
+        height: 2.5rem;
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+    .gustOptionsListPrice{
+        position: static;
+    }
+    .gustOptionsList {
+        position: static;
+    }
+    .searchButton{
+        width: 100%;
+        background-color: var(--bg-color);
+        color: white;
+        border-radius: 8px;
+    }
+    .hotelsList{
+        grid-template-columns: 1fr 1fr;
+    }
+    .navbarList a p{
+        font-size: .9rem;
+    }
+    .navbarList a{
+        padding: 0 8px;
+    }
+    .dashboardContainer{
+        gap: 4px;
+    }
+}
+@media (max-width : 782px) {
+    .navbarList a{
+        justify-content: center;
+    }
+    .navbarList a span{
+        display: none;
+    }
+    .iconContainer{
+        font-size: 1.6rem;
+    }
+    .navbarList a p{
+        display: none;
+    }
+    .dashboardContainer{
+        grid-template-columns: 1fr 20fr 7fr
+    }
+    .profile img{
+        width: 3rem;
+        height: 3rem;
+    }
+    .profileName{
+        font-size: .9rem;
+    }
+    .profileWork{
+        font-size: .8rem;
+    }
+    .singOut p{
+        display: none;
+    }
+    .iconContainer{
+        margin: 0;
+    }
+    .hotelsList{
+        grid-template-columns: 1fr;
+    }
+}
+@media (max-width : 668px) {
+    .hotelFilterSearchItemContainer span{
+        display: none;
+    }
+}

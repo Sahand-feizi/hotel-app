@@ -22,7 +22,7 @@ const headerDetailData = [
     },
 ]
 
-function SingleHotel({ cbSelectedHotel, hotel }) {
+function SingleHotel({ cbSelectedHotel, hotel , showMapHotels }) {
     const { id } = useParams()
     const [active, setActive] = useState(1)
     const [activeImg, setActiveImg] = useState(1)
@@ -82,7 +82,7 @@ function SingleHotel({ cbSelectedHotel, hotel }) {
                 <p className="hotelDetailsTitle">{headerDetailData[active - 1].title}</p>
             </div>
             <div className="mapContainer">
-                <Map />
+                <Map hotels={showMapHotels.hotels} isLoading={showMapHotels.loading}/>
             </div>
             {
                 isAddToWallet ?

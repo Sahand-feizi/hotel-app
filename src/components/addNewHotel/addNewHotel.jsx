@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Map from '../Map/Map'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { addFetchHotel } from '../../feature/hotels/hotelsSlice'
 
@@ -24,6 +24,7 @@ function AddNewHotel() {
     const lat = searchParams.get('lat')
     const lng = searchParams.get('lng')
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handelImageUrl = (selectedImage, url) => {
         setImagesUrl([...imagesUrl].map(imageUrl => imageUrl.id === selectedImage ? { ...imageUrl, image: url } : imageUrl))
@@ -48,7 +49,8 @@ function AddNewHotel() {
         }
     }, [lat, lng])
 
-    const handelAddHotel = async () => {
+    const handelAddHotel = async (e) => {
+        e.preventDefault()
         dispatch(addFetchHotel({
             "id": id,
             "listing_url": "https://www.airbnb.com/rooms/9690677",
@@ -198,6 +200,7 @@ function AddNewHotel() {
                 "Is Location Exact"
             ]
         }))
+        navigate('/hotels')
     }
 
     return (

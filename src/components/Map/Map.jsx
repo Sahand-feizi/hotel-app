@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent } from 'react-leaflet'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
 
-function Map({ className= '' }) {
-    const {hotels, loading: isLoading} = useSelector(state => state.hotels)
+function Map({ style = '', hotels, isLoading }) {
     const [searchParams, setSearchParams] = useSearchParams();
     const lat = searchParams.get('lat')
     const lng = searchParams.get('lng')
-    const [selectedHotelLocation, setSelectedHotelLocation] = useState([lat || 50, lng || 35])
+    const [selectedHotelLocation, setSelectedHotelLocation] = useState([lat || 35, lng || 35])
+    console.log(hotels);
 
     useEffect(() => {
         if (lat && lng) {
@@ -23,7 +22,7 @@ function Map({ className= '' }) {
             center={selectedHotelLocation}
             zoom={13}
             scrollWheelZoom={true}
-            className={`map ${className}`}
+            className={`map ${style}`}
         >
             <ChangeCenter position={selectedHotelLocation} />
             <DetectClick />
@@ -32,7 +31,7 @@ function Map({ className= '' }) {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             {
-                hotels.map(item => (
+                hotels?.map(item => (
                     <Marker key={item.id} position={[item.latitude, item.longitude]}>
                         <Popup>
                             {item.name}
@@ -42,6 +41,21 @@ function Map({ className= '' }) {
             }
         </MapContainer>
     )
+    // const position = [51.505, -0.09]
+
+    // return(
+    //     <MapContainer center={position} zoom={13} scrollWheelZoom={true} className='map'>
+    //         <TileLayer
+    //             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    //             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    //         />
+    //         <Marker position={position}>
+    //             <Popup>
+    //                 A pretty CSS3 popup. <br /> Easily customizable.
+    //             </Popup>
+    //         </Marker>
+    //     </MapContainer>
+    // )
 }
 
 export default Map
@@ -52,10 +66,10 @@ function ChangeCenter({ position }) {
     return null
 }
 
-function DetectClick(){
+function DetectClick() {
     const navigate = useNavigate()
     useMapEvent({
-        click:(e) => navigate(`/addNewHotel/${Date.now()}?lat=${e.latlng.lat}&lng=${e.latlng.lng}`)
+        click: (e) => navigate(`/addNewHotel/${Date.now()}?lat=${e.latlng.lat}&lng=${e.latlng.lng}`)
     })
     return null
 }

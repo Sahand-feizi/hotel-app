@@ -7,9 +7,10 @@ import { DateRange } from 'react-date-range';
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import useOutsideClick from '../../hooks/useOutsideClick/useOutsideClick';
 import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import { format } from 'date-fns';
 
 function HeaderSearch() {
-  const [searchParams , setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const room = JSON.parse(searchParams.get('options'))?.room;
   const destinationSearchParams = searchParams.get('destination')
   const [isOpenDate, setIsOpenDate] = useState(false)
@@ -80,54 +81,63 @@ function HeaderSearch() {
 
     <div className='hotelsHeader'>
       <div className="headerSearch">
-        <div className='hotelFilterSearchList'>
-          <div className="hotelFilterSearchItem" style={{ width: '7.5rem' }}>
-            <div id='exiptionsIdPrice' onClick={() => setIsOpenPrice(prev => !prev)}>
-              <p id='exiptionsIdPrice'>Price</p>
-              <span id='exiptionsIdPrice'>200$ to 400$</span>
+        <div className='hotelFilterSearchListContainer'>
+          <div className="hotelFilterSearchList">
+            <div className="hotelFilterSearchItem">
+              <div className="hotelFilterSearchItemContainer">
+                <div id='exiptionsIdPrice' onClick={() => setIsOpenPrice(prev => !prev)}>
+                  <p id='exiptionsIdPrice'>Price</p>
+                  <span id='exiptionsIdPrice'>200$ to 400$</span>
+                </div>
+                <IoIosArrowDown className='icon' />
+              </div>
+              {
+                isOpenPrice &&
+                <GuestOptionsPriceList
+                  options={price}
+                  handelOptions={handelOptionsPrice}
+                  handelClose={() => setIsOpenPrice(false)}
+                />
+              }
             </div>
-            {
-              isOpenPrice &&
-              <GuestOptionsPriceList
-                options={price}
-                handelOptions={handelOptionsPrice}
-                handelClose={() => setIsOpenPrice(false)}
-              />
-            }
-            <IoIosArrowDown className='icon' />
-          </div>
-          <div className="hotelFilterSearchItem">
-            <div id='exiptionsIdOptions' onClick={() => setIsShowOptions(prev => !prev)}>
-              <p id='exiptionsIdOptions'>Information</p>
-              <span id='exiptionsIdOptions'>1 adoult, 2 children, 2 room</span>
+            <div className="hotelFilterSearchItem">
+              <div className="hotelFilterSearchItemContainer">
+                <div id='exiptionsIdOptions' onClick={() => setIsShowOptions(prev => !prev)}>
+                  <p id='exiptionsIdOptions'>Information</p>
+                  <span id='exiptionsIdOptions'>1 adoult, ...</span>
+                </div>
+                <IoIosArrowDown className='icon' />
+              </div>
+              {
+                isShowOptions &&
+                <GuestOptionsList
+                  options={options}
+                  handelOptions={handelOptions}
+                  handelClose={() => setIsShowOptions(false)}
+                />
+              }
             </div>
-            {
-              isShowOptions &&
-              <GuestOptionsList
-                options={options}
-                handelOptions={handelOptions}
-                handelClose={() => setIsShowOptions(false)}
-              />
-            }
-            <IoIosArrowDown className='icon' />
-          </div>
-          <div className="hotelFilterSearchItem">
-            <div onClick={() => setIsOpenDate(prev => !prev)}>
-              <p>Date</p>
-              <span>2/25/2025 to 3/5/2025</span>
+            <div className="hotelFilterSearchItem">
+              <div className="hotelFilterSearchItemContainer">
+                <div onClick={() => setIsOpenDate(prev => !prev)}>
+                  <p>Date</p>
+                  <span>{format(date[0].startDate, 'MM/dd')} to {format(date[0].endDate, 'MM/dd')}</span>
+                </div>
+                <IoIosArrowDown className='icon' />
+              </div>
+              {
+                isOpenDate &&
+                <DateRange
+                  className='date'
+                  ranges={date}
+                  onChange={item => setDate([item.selection])}
+                  minDate={new Date()}
+                  moveRangeOnFirstSelection={true}
+                  rangeColors={['#1ec28b', '#1ec28b', '#1ec28b']}
+                />
+              }
+
             </div>
-            {
-              isOpenDate &&
-              <DateRange
-                className='date'
-                ranges={date}
-                onChange={item => setDate([item.selection])}
-                minDate={new Date()}
-                moveRangeOnFirstSelection={true}
-                rangeColors={['#1ec28b', '#1ec28b', '#1ec28b']}
-              />
-            }
-            <IoIosArrowDown className='icon' />
           </div>
           <button className='searchButton' onClick={hanlerSearch}>
             <LuSearch />

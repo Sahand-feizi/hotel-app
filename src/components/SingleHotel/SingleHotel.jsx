@@ -50,7 +50,7 @@ function SingleHotel({ cbSelectedHotel, hotel , showMapHotels }) {
         <div className='singleHotel'>
             <div className="images">
                 <div className="indexImage">
-                    <img src={hotel?.picture_url?.urls[activeImg - 1].image} alt={hotel?.name} />
+                    <img src={hotel?.picture_url?.urls[activeImg - 1]?.image} alt={hotel?.name} />
                 </div>
                 <div className="hotelImages">
                     {
